@@ -29,7 +29,10 @@ namespace Behemoth
         private int swingDisplacement = 16;
         private float stamina = 100;
         private float maxStamina = 100;
+        private float strength = 100;
+        private float maxStrength = 100;
         private Swing swing = null;
+        private float charge = 0;
 
         public AnimatedSprite anim;
         public AnimatedSprite[] animations = new AnimatedSprite[8];
@@ -63,6 +66,11 @@ namespace Behemoth
             get { return stamina; }
         }
 
+        public float Strength
+        {
+            get { return strength; }
+        }
+
         public Rectangle HitBox
         {
             get { return hitBox; }
@@ -71,6 +79,11 @@ namespace Behemoth
         public Swing Swing
         {
             get { return swing; }
+        }
+
+        public Dir Direction
+        {
+            get { return direction; }
         }
 
         public void Update(GameTime gameTime, int mapW, int mapH)
@@ -166,10 +179,6 @@ namespace Behemoth
             //Player is not moving
             else
             {
-                if (stamina < maxStamina)
-                {
-                    stamina += dt * 5;
-                }
                 
             }
             if (kState.IsKeyDown(Keys.LeftShift) && stamina > 0)
@@ -196,28 +205,45 @@ namespace Behemoth
                     speed = defaultSpeed;
                 }
             }
-            //More stamina for not holding down sprint
-            else if (stamina < maxStamina)
+            else
             {
-                stamina += dt * 5;
                 speed = defaultSpeed;
             }
-
-            if (kState.IsKeyDown(Keys.Space) && kStateOld.IsKeyUp(Keys.Space) && stamina >= 10)
+            //Spacebar just pressed
+            if (kState.IsKeyDown(Keys.Space) && kStateOld.IsKeyUp(Keys.Space))
+            {
+                strength -= 1;
+                charge += 0.4f;
+            }
+            //Spacebar being held
+            if (kState.IsKeyDown(Keys.Space) && kStateOld.IsKeyDown(Keys.Space))
+            {
+                if (strength >= 1)
+                {
+                    strength -= 1;
+                    charge += 0.4f;
+                }
+            }
+            //Spacebar released
+            if (kState.IsKeyUp(Keys.Space) && kStateOld.IsKeyDown(Keys.Space))
             {
                 //MySounds.projectileSound.Play(0.2f, 0.5f, 0f);
-                stamina -= 10;
-                swing = new Swing(position, gameTime, direction);
+                swing = new Swing(position, gameTime, direction, charge);
+                charge = 0;
             }
-            
             if (swing != null)
             {
                 swing.LifeTime -= (float)gameTime.ElapsedGameTime.TotalSeconds;
-
-            if (swing.LifeTime < 0)
-            {
-                swing = null;
+                if (swing.LifeTime < 0)
+                {
+                    swing = null;
+                }
             }
+
+            if (stamina > 0 && strength < maxStrength && kState.IsKeyUp(Keys.Space))
+            {
+                stamina -= dt * 0.4f;
+                strength += dt * 40f;
             }
             
             anim.setSpeed(0.25D - (0.2D * speed/maxSpeed));

@@ -13,18 +13,20 @@ namespace Behemoth
     class Swing
     {
         private Vector2 position;
-        private int radius =  32;
+        private int radius = 32;
         private bool finished = false;
         private float startTime;
         private float lifeTime = 0.2f;
         private Dir direction;
         private int displacement = 24;
+        private float charged;
 
-        public Swing(Vector2 newPos, GameTime time, Dir newDir)
+        public Swing(Vector2 newPos, GameTime time, Dir newDir, float ch)
         {
             position = newPos;
             startTime = (float)time.ElapsedGameTime.TotalSeconds;
             direction = newDir;
+            charged = ch;
 
             switch (direction)
             {
@@ -91,8 +93,57 @@ namespace Behemoth
             get { return direction; }
         }
 
+        public float Charged
+        {
+            get { return charged; }
+            set { charged = value; }
+        }
+
         public void Update(GameTime gameTime, Vector2 playerPos)
         {
+            switch (direction)
+            {
+                case Dir.Up:
+                    position.X = playerPos.X;
+                    position.Y = playerPos.Y - displacement;
+                    break;
+                case Dir.LeftUp:
+                    position.X = playerPos.X - displacement;
+                    position.Y = playerPos.Y - displacement;
+                    break;
+                case Dir.RightUp:
+                    position.X = playerPos.X + displacement;
+                    position.Y = playerPos.Y - displacement;
+                    break;
+                case Dir.Down:
+                    position.X = playerPos.X;
+                    position.Y = playerPos.Y + displacement;
+                    break;
+                case Dir.LeftDown:
+                    position.X = playerPos.X - displacement;
+                    position.Y = playerPos.Y + displacement;
+                    break;
+                case Dir.RightDown:
+                    position.X = playerPos.X + displacement;
+                    position.Y = playerPos.Y + displacement;
+                    break;
+                case Dir.Left:
+                    position.X = playerPos.X - displacement;
+                    position.Y = playerPos.Y;
+                    break;
+                case Dir.Right:
+                    position.X = playerPos.X + displacement;
+                    position.Y = playerPos.Y;
+                    break;
+                default:
+                    break;
+            }
+
+
+        }
+        public void ChargingUpdate(GameTime gameTime, Vector2 playerPos, Dir newDir)
+        {
+            direction = newDir;
             switch (direction)
             {
                 case Dir.Up:

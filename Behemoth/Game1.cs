@@ -145,7 +145,7 @@ namespace Behemoth
                     int sum = player.Swing.Radius + ob.Radius;
                     if (Vector2.Distance(player.Swing.Position, ob.HitPos) < sum)
                     {
-                        ob.OnHit(player.Position, 15);
+                        ob.OnHit(player.Position, player.Swing.Charged);
                     }
                 }
             }
@@ -214,7 +214,8 @@ namespace Behemoth
             spriteBatch.End();
 
             spriteBatch.Begin();
-            spriteBatch.DrawString(font, "Stamina: " + Math.Floor(player.Stamina), new Vector2(3,3), Color.White);
+            spriteBatch.DrawString(font, "Sta: " + Math.Floor(player.Stamina), new Vector2(3,3), Color.White);
+            spriteBatch.DrawString(font, "Str : " + Math.Floor(player.Strength), new Vector2(3, 45), Color.White);
             spriteBatch.End();
             
             base.Draw(gameTime);
