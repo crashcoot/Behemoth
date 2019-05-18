@@ -137,20 +137,23 @@ namespace Behemoth
             int mapH = myMap.HeightInPixels;
 
             player.Update(gameTime, mapW, mapH);
-            foreach(Swing sw in Swing.swings)
+            if (player.Swing != null)
             {
-                sw.Update(gameTime, player.Position);
+                player.Swing.Update(gameTime, player.Position);
                 foreach(Obstacle ob in Obstacle.obstacles)
                 {
-                    int sum = sw.Radius + ob.Radius;
-                    if (Vector2.Distance(sw.Position, ob.HitPos) < sum)
+                    int sum = player.Swing.Radius + ob.Radius;
+                    if (Vector2.Distance(player.Swing.Position, ob.HitPos) < sum)
                     {
-                        ob.Dead = true;
+                        ob.OnHit(player.Position, 15);
                     }
                 }
             }
+            foreach(Obstacle ob in Obstacle.obstacles)
+            {
+                ob.Update();
+            }
 
-            Swing.swings.RemoveAll(s => s.Finished);
             Obstacle.obstacles.RemoveAll(ob => ob.Dead);
 
             float tmpX = player.Position.X;
@@ -192,9 +195,9 @@ namespace Behemoth
 
             spriteBatch.Begin(transformMatrix: cam.GetViewMatrix(), sortMode: SpriteSortMode.FrontToBack);
             mapRenderer.Draw(myMap, cam.GetViewMatrix());
-            foreach (Swing sw in Swing.swings)
+            if (player.Swing != null) 
             {
-                spriteBatch.Draw(testHitSPrite, new Vector2(sw.Position.X-16, sw.Position.Y-16), null, Color.White, 0f, new Vector2(0, 0), new Vector2(1, 1), new SpriteEffects(), (float)((sw.Position.Y + 16) / myMap.HeightInPixels));
+                spriteBatch.Draw(testHitSPrite, new Vector2(player.Swing.Position.X-16, player.Swing.Position.Y-16), null, Color.White, 0f, new Vector2(0, 0), new Vector2(1, 1), new SpriteEffects(), (float)((player.Swing.Position.Y + 16) / myMap.HeightInPixels));
             }
             foreach (Obstacle ob in Obstacle.obstacles)
             {

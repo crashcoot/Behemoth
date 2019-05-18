@@ -20,8 +20,6 @@ namespace Behemoth
         private Dir direction;
         private int displacement = 24;
 
-        public static List<Swing> swings = new List<Swing>();
-
         public Swing(Vector2 newPos, GameTime time, Dir newDir)
         {
             position = newPos;
@@ -82,6 +80,17 @@ namespace Behemoth
             get { return radius; }
         }
 
+        public float LifeTime
+        {
+            get { return lifeTime; }
+            set { lifeTime = value; }
+        }
+
+        public Dir Direction
+        {
+            get { return direction; }
+        }
+
         public void Update(GameTime gameTime, Vector2 playerPos)
         {
             switch (direction)
@@ -120,12 +129,6 @@ namespace Behemoth
                     break;
                 default:
                     break;
-            }
-            lifeTime -= (float)gameTime.ElapsedGameTime.TotalSeconds;
-
-            if (lifeTime < 0)
-            {
-                finished = true;
             }
         }
     }

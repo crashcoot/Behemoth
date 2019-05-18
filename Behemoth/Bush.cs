@@ -19,5 +19,15 @@ namespace Behemoth
             drawSort = 32;
             hitBox = new Rectangle((int)position.X + 16, (int)position.Y + 12, 30, 15);
         }
+
+        public override void OnHit(Vector2 otherPos, float power)
+        {
+            dead = true;
+        }
+
+        public override void Update()
+        {
+
+        }
     }
 }

@@ -10,7 +10,7 @@ using Microsoft.Xna.Framework.Input;
 
 namespace Behemoth
 {
-    class Obstacle
+    abstract class Obstacle
     {
         protected Vector2 position;
         protected int radius;
@@ -19,6 +19,10 @@ namespace Behemoth
         protected bool dead = false;
         private Texture2D texture;
         protected int drawSort;
+        public abstract void OnHit(Vector2 otherPos, float power);
+        protected float momentum = 0;
+        protected Vector2 launchDirection;
+        public abstract void Update();
 
         public static List<Obstacle> obstacles = new List<Obstacle>();
 
