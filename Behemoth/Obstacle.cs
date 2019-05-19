@@ -22,6 +22,7 @@ namespace Behemoth
         public abstract void OnHit(Vector2 otherPos, float power);
         protected float momentum = 0;
         protected Vector2 launchDirection;
+        protected float health;
         public abstract void Update();
         protected float mass;
 

@@ -267,10 +267,10 @@ namespace Behemoth
             if (ob != null && speed > defaultSpeed*3 )
             {
                 speed = defaultSpeed;
-                if (stamina > 5)
+                if (stamina >= 2)
                 {
-                    stamina -= 5;
-                    ob.OnHit(position, 5);
+                    stamina -= 2;
+                    ob.OnHit(position, 40);
                 }
                 
             }

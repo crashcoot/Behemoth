@@ -20,16 +20,20 @@ namespace Behemoth
             hitBox = new Rectangle((int)position.X + 20, (int)position.Y + 80, 20, 20);
             drawSort = 40;
             mass = 0.5F;
+            health = 20;
         }
 
         public override void OnHit(Vector2 otherPos, float power)
         {
-            dead = true;
+            health -= power;
         }
 
         public override void Update()
         {
-
+            if (health <= 0)
+            {
+                dead = true;
+            }
         }
     }
 }

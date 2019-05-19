@@ -19,6 +19,7 @@ namespace Behemoth
             hitBox = new Rectangle((int)position.X + 5, (int)position.Y + 10, 25, 20);
             drawSort = 32;
             mass = 0.8F;
+            health = 140;
         }
 
         public override void OnHit(Vector2 otherPos, float power)
@@ -26,16 +27,23 @@ namespace Behemoth
                 launchDirection = Vector2.Subtract(position, otherPos);
                 launchDirection.Normalize();
                 momentum = power;
+                health -= power;
         }
 
         public override void Update()
         {
+            if (health <= 0)
+            {
+                dead = true;
+                return;
+            }
             if (momentum > 0)
             {
                 foreach (Obstacle ob in Obstacle.obstacles)
                 {
                     if (ob != this && hitBox.Intersects(ob.HitBox))
                     {
+                        health -= 25 * ob.Mass;
                         momentum *= 1 - ob.Mass;
                         ob.OnHit(position, momentum);
                     }

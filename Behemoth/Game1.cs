@@ -67,6 +67,8 @@ namespace Behemoth
         TiledMapRenderer mapRenderer;
         TiledMap myMap;
 
+        Forest forest;
+
         Camera2D cam;
 
         Player player = new Player();
@@ -170,9 +172,7 @@ namespace Behemoth
             treeSprite = Content.Load<Texture2D>("Obstacles/Tree");
             bushSprite = Content.Load<Texture2D>("Obstacles/bush");
             boulderSprite = Content.Load<Texture2D>("Obstacles/boulder");
-            generateForest(new Vector2(0,0), myMap.WidthInPixels, myMap.HeightInPixels, 25, 25);
-
-
+            forest = new Forest(new Vector2(0,0), myMap.WidthInPixels, myMap.HeightInPixels, 25, 25, treeSprite, bushSprite, boulderSprite);
         }
 
         
@@ -200,13 +200,16 @@ namespace Behemoth
                 ob.Update();
             }
 
+            float camW = graphics.PreferredBackBufferWidth / cam.Zoom;
+            float camH = graphics.PreferredBackBufferHeight / cam.Zoom;
+
             Obstacle.obstacles.RemoveAll(ob => ob.Dead);
+            forest.Update(gameTime, player, camW, camH);
 
             float tmpX = player.Position.X;
             float tmpY = player.Position.Y;
 
-            float camW = graphics.PreferredBackBufferWidth / cam.Zoom;
-            float camH = graphics.PreferredBackBufferHeight / cam.Zoom;
+            
 
             if (tmpX < camW / 2)
             {
@@ -236,9 +239,7 @@ namespace Behemoth
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.DarkGreen);
-
-
-
+            
             spriteBatch.Begin(transformMatrix: cam.GetViewMatrix(), sortMode: SpriteSortMode.FrontToBack);
             mapRenderer.Draw(myMap, cam.GetViewMatrix());
             if (player.Swing != null) 
@@ -265,41 +266,6 @@ namespace Behemoth
             spriteBatch.End();
             
             base.Draw(gameTime);
-        }
-
-        private void generateForest(Vector2 topLeft, int width, int height, int columns, int rows)
-        {
-            var rnd = new Random(DateTime.Now.Millisecond);
-            for (int x = 0; x < columns; x++)
-            {
-                for (int y = 0; y < rows; y++)
-                {
-                    Obstacle.obstacles.Add(new Tree(new Vector2(rnd.Next(x * width / columns + 16, (x + 1) * width / columns) - 16, rnd.Next(y * height / rows + 16, (y + 1) * height / rows - 16)), treeSprite));
-                }
-            }
-            for (int x = 0; x < columns; x += 2)
-            {
-                for (int y = 0; y < rows; y += 2)
-                {
-                    Bush tempBush = new Bush(new Vector2(rnd.Next(x * width / columns + 16, (x + 2) * width / columns), rnd.Next(y * height / rows + 16, (y + 1) * height / rows - 16)), bushSprite);
-                    if (Obstacle.didCollide(tempBush.HitBox) == null)
-                    {
-                        Obstacle.obstacles.Add(tempBush);
-                    }
-                }
-            }
-
-            for (int x = 0; x < columns; x += 3)
-            {
-                for (int y = 0; y < rows; y += 3)
-                {
-                    Boulder tempBoulder = new Boulder(new Vector2(rnd.Next(x * width / columns + 16, (x + 2) * width / columns), rnd.Next(y * height / rows + 16, (y + 1) * height / rows - 16)), boulderSprite);
-                    if (Obstacle.didCollide(tempBoulder.HitBox) == null)
-                    {
-                        Obstacle.obstacles.Add(tempBoulder);
-                    }
-                }
-            }
         }
     }
 }

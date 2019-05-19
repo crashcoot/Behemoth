@@ -45,6 +45,7 @@
     <Compile Include="Boulder.cs" />
     <Compile Include="Bush.cs" />
     <Compile Include="Extensions.cs" />
+    <Compile Include="Forest.cs" />
     <Compile Include="Game1.cs" />
     <Compile Include="Obstacle.cs" />
     <Compile Include="Player.cs" />
