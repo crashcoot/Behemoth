@@ -13,10 +13,10 @@ namespace Behemoth
     class Swing
     {
         private Vector2 position;
-        private int radius = 32;
+        private int radius = 24;
         private bool finished = false;
         private float startTime;
-        private float lifeTime = 0.2f;
+        private bool active = true;
         private Dir direction;
         private int displacement = 24;
         private float charged;
@@ -82,10 +82,9 @@ namespace Behemoth
             get { return radius; }
         }
 
-        public float LifeTime
+        public bool Active
         {
-            get { return lifeTime; }
-            set { lifeTime = value; }
+            get { return active; }
         }
 
         public Dir Direction
@@ -96,90 +95,18 @@ namespace Behemoth
         public float Charged
         {
             get { return charged; }
-            set { charged = value; }
         }
 
-        public void Update(GameTime gameTime, Vector2 playerPos)
+        public void Update(GameTime gameTime, Player player)
         {
-            switch (direction)
+            active = false;
+            foreach (Obstacle ob in Obstacle.obstacles)
             {
-                case Dir.Up:
-                    position.X = playerPos.X;
-                    position.Y = playerPos.Y - displacement;
-                    break;
-                case Dir.LeftUp:
-                    position.X = playerPos.X - displacement;
-                    position.Y = playerPos.Y - displacement;
-                    break;
-                case Dir.RightUp:
-                    position.X = playerPos.X + displacement;
-                    position.Y = playerPos.Y - displacement;
-                    break;
-                case Dir.Down:
-                    position.X = playerPos.X;
-                    position.Y = playerPos.Y + displacement;
-                    break;
-                case Dir.LeftDown:
-                    position.X = playerPos.X - displacement;
-                    position.Y = playerPos.Y + displacement;
-                    break;
-                case Dir.RightDown:
-                    position.X = playerPos.X + displacement;
-                    position.Y = playerPos.Y + displacement;
-                    break;
-                case Dir.Left:
-                    position.X = playerPos.X - displacement;
-                    position.Y = playerPos.Y;
-                    break;
-                case Dir.Right:
-                    position.X = playerPos.X + displacement;
-                    position.Y = playerPos.Y;
-                    break;
-                default:
-                    break;
-            }
-
-
-        }
-        public void ChargingUpdate(GameTime gameTime, Vector2 playerPos, Dir newDir)
-        {
-            direction = newDir;
-            switch (direction)
-            {
-                case Dir.Up:
-                    position.X = playerPos.X;
-                    position.Y = playerPos.Y - displacement;
-                    break;
-                case Dir.LeftUp:
-                    position.X = playerPos.X - displacement;
-                    position.Y = playerPos.Y - displacement;
-                    break;
-                case Dir.RightUp:
-                    position.X = playerPos.X + displacement;
-                    position.Y = playerPos.Y - displacement;
-                    break;
-                case Dir.Down:
-                    position.X = playerPos.X;
-                    position.Y = playerPos.Y + displacement;
-                    break;
-                case Dir.LeftDown:
-                    position.X = playerPos.X - displacement;
-                    position.Y = playerPos.Y + displacement;
-                    break;
-                case Dir.RightDown:
-                    position.X = playerPos.X + displacement;
-                    position.Y = playerPos.Y + displacement;
-                    break;
-                case Dir.Left:
-                    position.X = playerPos.X - displacement;
-                    position.Y = playerPos.Y;
-                    break;
-                case Dir.Right:
-                    position.X = playerPos.X + displacement;
-                    position.Y = playerPos.Y;
-                    break;
-                default:
-                    break;
+                int sum = player.Swing.Radius + ob.Radius;
+                if (Vector2.Distance(player.Swing.Position, ob.HitPos) < sum)
+                {
+                    ob.OnHit(player.Position, player.Swing.Charged);
+                }
             }
         }
     }

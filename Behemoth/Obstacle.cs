@@ -23,6 +23,7 @@ namespace Behemoth
         protected float momentum = 0;
         protected Vector2 launchDirection;
         public abstract void Update();
+        protected float mass;
 
         public static List<Obstacle> obstacles = new List<Obstacle>();
 
@@ -60,6 +61,11 @@ namespace Behemoth
         public Rectangle HitBox
         {
             get { return hitBox; }
+        }
+
+        public float Mass
+        {
+            get { return mass; }
         }
 
         public Obstacle(Vector2 newPos, Texture2D newTex)

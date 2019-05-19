@@ -18,6 +18,7 @@ namespace Behemoth
             hitPos = new Vector2(position.X + 16, position.Y + 16);
             hitBox = new Rectangle((int)position.X + 5, (int)position.Y + 10, 25, 20);
             drawSort = 32;
+            mass = 0.8F;
         }
 
         public override void OnHit(Vector2 otherPos, float power)
@@ -35,15 +36,21 @@ namespace Behemoth
                 {
                     if (ob != this && hitBox.Intersects(ob.HitBox))
                     {
+                        momentum *= 1 - ob.Mass;
                         ob.OnHit(position, momentum);
-                        momentum *= 0.3F;
                     }
                 }
-                position.X += launchDirection.X * momentum;
-                position.Y += launchDirection.Y * momentum;
+                position.X += launchDirection.X * momentum * 0.35F;
+                position.Y += launchDirection.Y * momentum * 0.35F;
                 hitPos = new Vector2(position.X + 16, position.Y + 16);
                 hitBox = new Rectangle((int)position.X + 5, (int)position.Y + 10, 25, 20);
-                momentum *= 0.9F;
+                if (momentum < 30)
+                {
+                    momentum *= 0.8F;
+                } else
+                {
+                    momentum *= 0.99F;
+                }
             }
         }
     }

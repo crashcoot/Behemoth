@@ -18,6 +18,7 @@ namespace Behemoth
             hitPos = new Vector2(position.X + 32, position.Y);
             drawSort = 32;
             hitBox = new Rectangle((int)position.X + 16, (int)position.Y + 12, 30, 15);
+            mass = 0.1F;
         }
 
         public override void OnHit(Vector2 otherPos, float power)

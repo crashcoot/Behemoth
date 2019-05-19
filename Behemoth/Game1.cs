@@ -10,7 +10,7 @@ using System;
 namespace Behemoth
 {
 
-    enum Dir
+    public enum Dir
     {
         Right,
         RightUp,
@@ -21,9 +21,10 @@ namespace Behemoth
         Down,
         RightDown
     }
-    
+
     public class Game1 : Game
     {
+
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
@@ -37,8 +38,24 @@ namespace Behemoth
         Texture2D playerRightUp;
         Texture2D playerLeftDown;
         Texture2D playerLeftUp;
+        Texture2D playerDownCharging;
+        Texture2D playerUpCharging;
+        Texture2D playerLeftCharging;
+        Texture2D playerRightCharging;
+        Texture2D playerRightDownCharging;
+        Texture2D playerRightUpCharging;
+        Texture2D playerLeftDownCharging;
+        Texture2D playerLeftUpCharging;
+        Texture2D playerDownSwing;
+        Texture2D playerUpSwing;
+        Texture2D playerLeftSwing;
+        Texture2D playerRightSwing;
+        Texture2D playerRightDownSwing;
+        Texture2D playerRightUpSwing;
+        Texture2D playerLeftDownSwing;
+        Texture2D playerLeftUpSwing;
 
-        Texture2D testHitSPrite;
+        //Texture2D testHitSPrite;
 
         Texture2D treeSprite;
         Texture2D bushSprite;
@@ -91,7 +108,7 @@ namespace Behemoth
 
             font = Content.Load<SpriteFont>("Misc/spaceFont");
 
-            testHitSPrite = Content.Load<Texture2D>("Misc/testHit");
+            //testHitSPrite = Content.Load<Texture2D>("Misc/testHit");
 
             playerUp = Content.Load<Texture2D>("Player/BehemothUp");
             playerDown = Content.Load<Texture2D>("Player/BehemothDown");
@@ -102,14 +119,51 @@ namespace Behemoth
             playerLeftDown = Content.Load<Texture2D>("Player/BehemothLeftDown");
             playerLeftUp = Content.Load<Texture2D>("Player/BehemothLeftUp");
 
-            player.animations[0] = new AnimatedSprite(playerRight, 1, 4);
-            player.animations[1] = new AnimatedSprite(playerRightUp, 1, 4);
-            player.animations[2] = new AnimatedSprite(playerUp, 1, 4);
-            player.animations[3] = new AnimatedSprite(playerLeftUp, 1, 4);
-            player.animations[4] = new AnimatedSprite(playerLeft, 1, 4);
-            player.animations[5] = new AnimatedSprite(playerLeftDown, 1, 4);
-            player.animations[6] = new AnimatedSprite(playerDown, 1, 4);
-            player.animations[7] = new AnimatedSprite(playerRightDown, 1, 4);
+            playerUpCharging = Content.Load<Texture2D>("Player/BehemothUpCharging");
+            playerDownCharging = Content.Load<Texture2D>("Player/BehemothDownCharging");
+            playerLeftCharging = Content.Load<Texture2D>("Player/BehemothLeftCharging");
+            playerRightCharging = Content.Load<Texture2D>("Player/BehemothRightCharging");
+            playerRightDownCharging = Content.Load<Texture2D>("Player/BehemothRightDownCharging");
+            playerRightUpCharging = Content.Load<Texture2D>("Player/BehemothRightUpCharging");
+            playerLeftDownCharging = Content.Load<Texture2D>("Player/BehemothLeftDownCharging");
+            playerLeftUpCharging = Content.Load<Texture2D>("Player/BehemothLeftUpCharging");
+
+            playerUpSwing = Content.Load<Texture2D>("Player/BehemothUpSwing");
+            playerDownSwing = Content.Load<Texture2D>("Player/BehemothDownSwing");
+            playerLeftSwing = Content.Load<Texture2D>("Player/BehemothLeftSwing");
+            playerRightSwing = Content.Load<Texture2D>("Player/BehemothRightSwing");
+            playerRightDownSwing = Content.Load<Texture2D>("Player/BehemothRightDownSwing");
+            playerRightUpSwing = Content.Load<Texture2D>("Player/BehemothRightUpSwing");
+            playerLeftDownSwing = Content.Load<Texture2D>("Player/BehemothLeftDownSwing");
+            playerLeftUpSwing = Content.Load<Texture2D>("Player/BehemothLeftUpSwing");
+
+
+            player.animations[0][0] = new AnimatedSprite(playerRight, 1, 4);
+            player.animations[0][1] = new AnimatedSprite(playerRightUp, 1, 4);
+            player.animations[0][2] = new AnimatedSprite(playerUp, 1, 4);
+            player.animations[0][3] = new AnimatedSprite(playerLeftUp, 1, 4);
+            player.animations[0][4] = new AnimatedSprite(playerLeft, 1, 4);
+            player.animations[0][5] = new AnimatedSprite(playerLeftDown, 1, 4);
+            player.animations[0][6] = new AnimatedSprite(playerDown, 1, 4);
+            player.animations[0][7] = new AnimatedSprite(playerRightDown, 1, 4);
+
+            player.animations[1][0] = new AnimatedSprite(playerRightCharging, 1, 4);
+            player.animations[1][1] = new AnimatedSprite(playerRightUpCharging, 1, 4);
+            player.animations[1][2] = new AnimatedSprite(playerUpCharging, 1, 4);
+            player.animations[1][3] = new AnimatedSprite(playerLeftUpCharging, 1, 4);
+            player.animations[1][4] = new AnimatedSprite(playerLeftCharging, 1, 4);
+            player.animations[1][5] = new AnimatedSprite(playerLeftDownCharging, 1, 4);
+            player.animations[1][6] = new AnimatedSprite(playerDownCharging, 1, 4);
+            player.animations[1][7] = new AnimatedSprite(playerRightDownCharging, 1, 4);
+
+            player.animations[2][0] = new AnimatedSprite(playerRightSwing, 1, 1);
+            player.animations[2][1] = new AnimatedSprite(playerRightUpSwing, 1, 1);
+            player.animations[2][2] = new AnimatedSprite(playerUpSwing, 1, 1);
+            player.animations[2][3] = new AnimatedSprite(playerLeftUpSwing, 1, 1);
+            player.animations[2][4] = new AnimatedSprite(playerLeftSwing, 1, 1);
+            player.animations[2][5] = new AnimatedSprite(playerLeftDownSwing, 1, 1);
+            player.animations[2][6] = new AnimatedSprite(playerDownSwing, 1, 1);
+            player.animations[2][7] = new AnimatedSprite(playerRightDownSwing, 1, 1);
 
             myMap = Content.Load<TiledMap>("Misc/gameMap");
 
@@ -139,15 +193,7 @@ namespace Behemoth
             player.Update(gameTime, mapW, mapH);
             if (player.Swing != null)
             {
-                player.Swing.Update(gameTime, player.Position);
-                foreach(Obstacle ob in Obstacle.obstacles)
-                {
-                    int sum = player.Swing.Radius + ob.Radius;
-                    if (Vector2.Distance(player.Swing.Position, ob.HitPos) < sum)
-                    {
-                        ob.OnHit(player.Position, player.Swing.Charged);
-                    }
-                }
+                player.Swing.Update(gameTime, player);
             }
             foreach(Obstacle ob in Obstacle.obstacles)
             {
@@ -197,19 +243,19 @@ namespace Behemoth
             mapRenderer.Draw(myMap, cam.GetViewMatrix());
             if (player.Swing != null) 
             {
-                spriteBatch.Draw(testHitSPrite, new Vector2(player.Swing.Position.X-16, player.Swing.Position.Y-16), null, Color.White, 0f, new Vector2(0, 0), new Vector2(1, 1), new SpriteEffects(), (float)((player.Swing.Position.Y + 16) / myMap.HeightInPixels));
+                //spriteBatch.Draw(testHitSPrite, new Vector2(player.Swing.Position.X-16, player.Swing.Position.Y-16), null, Color.White, 0f, new Vector2(0, 0), new Vector2(1, 1), new SpriteEffects(), (float)((player.Swing.Position.Y + 16) / myMap.HeightInPixels));
             }
             foreach (Obstacle ob in Obstacle.obstacles)
             {
                 spriteBatch.Draw(ob.Texture, ob.Position, null, Color.White, 0f, new Vector2(0, 0), new Vector2(1, 1), new SpriteEffects(), (float)((ob.HitPos.Y - ob.DrawSort) / myMap.HeightInPixels));
-                spriteBatch.Draw(_texture, ob.HitBox, Color.White);
+                //spriteBatch.Draw(_texture, ob.HitBox, Color.White);
             }
 
 
             
 
             player.anim.Draw(spriteBatch, new Vector2(player.Position.X - 32, player.Position.Y - 32), myMap.WidthInPixels);
-            spriteBatch.Draw(_texture, player.HitBox, Color.White);
+            //spriteBatch.Draw(_texture, player.HitBox, Color.White);
 
             spriteBatch.End();
 

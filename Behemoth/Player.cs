@@ -33,9 +33,17 @@ namespace Behemoth
         private float maxStrength = 100;
         private Swing swing = null;
         private float charge = 0;
+        private State state;
 
         public AnimatedSprite anim;
-        public AnimatedSprite[] animations = new AnimatedSprite[8];
+        //0 = Walking  1 = charging  2 = swing
+        public AnimatedSprite[][] animations = { new AnimatedSprite[8], new AnimatedSprite[8], new AnimatedSprite[8] };
+        private enum State
+        {
+               Walking,
+               Charging,
+               Swing
+        }
 
         const int topBuffer = 64;
 
@@ -90,20 +98,10 @@ namespace Behemoth
         {
             KeyboardState kState = Keyboard.GetState();
             float dt = (float)gameTime.ElapsedGameTime.TotalSeconds;
+            state = State.Walking;
 
             hitBox.X = (int)position.X - 13;
             hitBox.Y = (int)position.Y;
-
-            anim = animations[(int)direction];
-
-            if (isMoving)
-            {
-                anim.Update(gameTime);
-            }
-            else
-            {
-                anim.setFrame(0);
-            }
 
             isMoving = false;
 
@@ -167,7 +165,7 @@ namespace Behemoth
                 }
                 tempRect = hitBox;
                 tempRect.Y -= (int)Math.Ceiling((speed * dt * Math.Sin((int)direction * Math.PI / 4)));
-                if ((tempOb = Obstacle.didCollide(tempRect)) == null && tempRect.X < mapW && tempRect.Y > 64)
+                if ((tempOb = Obstacle.didCollide(tempRect)) == null && tempRect.Y < mapH && tempRect.Y > 64)
                 {
                     position.Y -= (float)(speed * dt * Math.Sin((int)direction * Math.PI / 4));
                 }
@@ -212,12 +210,16 @@ namespace Behemoth
             //Spacebar just pressed
             if (kState.IsKeyDown(Keys.Space) && kStateOld.IsKeyUp(Keys.Space))
             {
-                strength -= 1;
-                charge += 0.4f;
+                if (strength >= 1)
+                {
+                    strength -= 1;
+                    charge += 0.4f;
+                }
             }
             //Spacebar being held
             if (kState.IsKeyDown(Keys.Space) && kStateOld.IsKeyDown(Keys.Space))
             {
+                state = State.Charging;
                 if (strength >= 1)
                 {
                     strength -= 1;
@@ -228,16 +230,13 @@ namespace Behemoth
             if (kState.IsKeyUp(Keys.Space) && kStateOld.IsKeyDown(Keys.Space))
             {
                 //MySounds.projectileSound.Play(0.2f, 0.5f, 0f);
+                state = State.Swing;
                 swing = new Swing(position, gameTime, direction, charge);
                 charge = 0;
             }
-            if (swing != null)
+            if (swing != null && !swing.Active)
             {
-                swing.LifeTime -= (float)gameTime.ElapsedGameTime.TotalSeconds;
-                if (swing.LifeTime < 0)
-                {
-                    swing = null;
-                }
+                 swing = null;
             }
 
             if (stamina > 0 && strength < maxStrength && kState.IsKeyUp(Keys.Space))
@@ -246,7 +245,18 @@ namespace Behemoth
                 strength += dt * 40f;
             }
             
-            anim.setSpeed(0.25D - (0.2D * speed/maxSpeed));
+            
+            anim = animations[(int)state][(int)direction];
+            anim.setSpeed(0.25D - (0.2D * speed / maxSpeed));
+
+            if (isMoving)
+            {
+                anim.Update(gameTime);
+            }
+            else
+            {
+                anim.setFrame(0);
+            }
             kStateOld = kState;
             directionOld = direction;
             positionOld = position;

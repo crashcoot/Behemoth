@@ -44,6 +44,7 @@
     <Compile Include="AnimatedSprite.cs" />
     <Compile Include="Boulder.cs" />
     <Compile Include="Bush.cs" />
+    <Compile Include="Extensions.cs" />
     <Compile Include="Game1.cs" />
     <Compile Include="Obstacle.cs" />
     <Compile Include="Player.cs" />
@@ -77,6 +78,22 @@
   <ItemGroup>
     <MonoGameContentReference Include="Content\Content.mgcb" />
     <None Include="app.manifest" />
+    <None Include="Content\Misc\BehemothDownCharging.xnb" />
+    <None Include="Content\Misc\BehemothDownSwing.xnb" />
+    <None Include="Content\Misc\BehemothLeftCharging.xnb" />
+    <None Include="Content\Misc\BehemothLeftDownCharging.xnb" />
+    <None Include="Content\Misc\BehemothLeftDownSwing.xnb" />
+    <None Include="Content\Misc\BehemothLeftSwing.xnb" />
+    <None Include="Content\Misc\BehemothLeftUpCharging.xnb" />
+    <None Include="Content\Misc\BehemothLeftUpSwing.xnb" />
+    <None Include="Content\Misc\BehemothRightCharging.xnb" />
+    <None Include="Content\Misc\BehemothRightDownCharging.xnb" />
+    <None Include="Content\Misc\BehemothRightDownSwing.xnb" />
+    <None Include="Content\Misc\BehemothRightSwing.xnb" />
+    <None Include="Content\Misc\BehemothRightUpCharging.xnb" />
+    <None Include="Content\Misc\BehemothRightUpSwing.xnb" />
+    <None Include="Content\Misc\BehemothUpCharging.xnb" />
+    <None Include="Content\Misc\BehemothUpSwing.xnb" />
     <None Include="Content\Misc\gameMap.xnb" />
     <None Include="Content\Misc\Grass.xnb" />
     <None Include="Content\Misc\spaceFont.xnb" />
