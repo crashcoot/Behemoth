@@ -67,6 +67,7 @@ namespace Behemoth
         TiledMapRenderer mapRenderer;
         TiledMap myMap;
 
+        ObstacleList obstacles;
         Forest forest;
 
         Camera2D cam;
@@ -168,11 +169,12 @@ namespace Behemoth
             player.animations[2][7] = new AnimatedSprite(playerRightDownSwing, 1, 1);
 
             myMap = Content.Load<TiledMap>("Misc/gameMap");
+            obstacles = new ObstacleList(new Vector2(0,0), myMap.WidthInPixels, myMap.HeightInPixels);
 
             treeSprite = Content.Load<Texture2D>("Obstacles/Tree");
             bushSprite = Content.Load<Texture2D>("Obstacles/bush");
             boulderSprite = Content.Load<Texture2D>("Obstacles/boulder");
-            forest = new Forest(new Vector2(0,0), myMap.WidthInPixels, myMap.HeightInPixels, 25, 25, treeSprite, bushSprite, boulderSprite);
+            forest = new Forest(obstacles, new Vector2(0,0), myMap.WidthInPixels, myMap.HeightInPixels, 20, 20, treeSprite, bushSprite, boulderSprite);
         }
 
         
@@ -190,21 +192,18 @@ namespace Behemoth
             int mapW = myMap.WidthInPixels;
             int mapH = myMap.HeightInPixels;
 
-            player.Update(gameTime, mapW, mapH);
+            player.Update(obstacles, gameTime, mapW, mapH);
             if (player.Swing != null)
             {
-                player.Swing.Update(gameTime, player);
+                player.Swing.Update(obstacles, gameTime, player);
             }
-            foreach(Obstacle ob in Obstacle.obstacles)
-            {
-                ob.Update();
-            }
+            obstacles.Update(obstacles);
 
             float camW = graphics.PreferredBackBufferWidth / cam.Zoom;
             float camH = graphics.PreferredBackBufferHeight / cam.Zoom;
 
-            Obstacle.obstacles.RemoveAll(ob => ob.Dead);
-            forest.Update(gameTime, player, camW, camH);
+            obstacles.RemoveDead();
+            forest.Update(obstacles, gameTime, player, camW, camH);
 
             float tmpX = player.Position.X;
             float tmpY = player.Position.Y;
@@ -246,11 +245,11 @@ namespace Behemoth
             {
                 //spriteBatch.Draw(testHitSPrite, new Vector2(player.Swing.Position.X-16, player.Swing.Position.Y-16), null, Color.White, 0f, new Vector2(0, 0), new Vector2(1, 1), new SpriteEffects(), (float)((player.Swing.Position.Y + 16) / myMap.HeightInPixels));
             }
-            foreach (Obstacle ob in Obstacle.obstacles)
-            {
-                spriteBatch.Draw(ob.Texture, ob.Position, null, Color.White, 0f, new Vector2(0, 0), new Vector2(1, 1), new SpriteEffects(), (float)((ob.HitPos.Y - ob.DrawSort) / myMap.HeightInPixels));
-                //spriteBatch.Draw(_texture, ob.HitBox, Color.White);
-            }
+            obstacles.Draw(spriteBatch, myMap.HeightInPixels);
+            //foreach (Obstacle ob in obstacles.AdjacentObstacles(player.Position))
+            //{
+                //spriteBatch.Draw(ob.Texture, ob.Position, null, Color.White, 0f, new Vector2(0, 0), new Vector2(1, 1), new SpriteEffects(), (float)((ob.HitPos.Y - ob.DrawSort) / myMap.HeightInPixels));
+            //}
 
 
             

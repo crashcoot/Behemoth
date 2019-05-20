@@ -18,7 +18,7 @@ namespace Behemoth
             radius = 14;
             hitPos = new Vector2(position.X + 32, position.Y + 100);
             hitBox = new Rectangle((int)position.X + 20, (int)position.Y + 80, 20, 20);
-            drawSort = 40;
+            drawSort = 50;
             mass = 0.5F;
             health = 20;
         }
@@ -28,7 +28,7 @@ namespace Behemoth
             health -= power;
         }
 
-        public override void Update()
+        public override void Update(ObstacleList obstacles)
         {
             if (health <= 0)
             {

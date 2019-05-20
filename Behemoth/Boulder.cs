@@ -30,8 +30,9 @@ namespace Behemoth
                 health -= power;
         }
 
-        public override void Update()
+        public override void Update(ObstacleList obstacles)
         {
+            moving = false;
             if (health <= 0)
             {
                 dead = true;
@@ -39,7 +40,8 @@ namespace Behemoth
             }
             if (momentum > 0)
             {
-                foreach (Obstacle ob in Obstacle.obstacles)
+                moving = true;
+                foreach (Obstacle ob in obstacles.AdjacentObstacles(position))
                 {
                     if (ob != this && hitBox.Intersects(ob.HitBox))
                     {

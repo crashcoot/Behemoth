@@ -23,10 +23,15 @@ namespace Behemoth
         protected float momentum = 0;
         protected Vector2 launchDirection;
         protected float health;
-        public abstract void Update();
+        public abstract void Update(ObstacleList obstacles);
         protected float mass;
+        protected bool moving = false;
 
-        public static List<Obstacle> obstacles = new List<Obstacle>();
+        public Obstacle(Vector2 newPos, Texture2D newTex)
+        {
+            position = newPos;
+            texture = newTex;
+        }
 
         public Vector2 HitPos
         {
@@ -69,22 +74,10 @@ namespace Behemoth
             get { return mass; }
         }
 
-        public Obstacle(Vector2 newPos, Texture2D newTex)
+        public bool Moving
         {
-            position = newPos;
-            texture = newTex;
+            get { return moving; }
         }
-
-        public static Obstacle didCollide(Rectangle otherRect)
-        {
-            foreach (Obstacle o in Obstacle.obstacles)
-            {
-                if (o.hitBox.Intersects(otherRect))
-                {
-                    return o;
-                }
-            }
-            return null;
-        }
+        
     }
 }
