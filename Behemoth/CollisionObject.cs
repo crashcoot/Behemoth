@@ -12,5 +12,6 @@ namespace Behemoth
     abstract class CollisionObject
     {
         protected Rectangle hitBox;
+        public abstract void OnHit(Vector2 otherPos, float power);
     }
 }

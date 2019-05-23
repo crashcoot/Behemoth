@@ -118,7 +118,9 @@ namespace Behemoth
         {
             List<Obstacle> tempList = new List<Obstacle>();
             int x = (int)position.X / sectionSize;
+            if (x < 0) x = 0;
             int y = (int)position.Y / sectionSize;
+            if (y < 0) y = 0;
             List<List<Obstacle>> sections = new List<List<Obstacle>>();
             if (x != 0 && y != 0) { sections.Add(obstacles[x - 1, y - 1]); }
             if (y != 0) { sections.Add(obstacles[x, y - 1]); }

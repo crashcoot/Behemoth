@@ -18,7 +18,6 @@ namespace Behemoth
         protected bool dead = false;
         private Texture2D texture;
         protected int drawSort;
-        public abstract void OnHit(Vector2 otherPos, float power);
         protected float momentum = 0;
         protected Vector2 launchDirection;
         protected float health;

@@ -62,7 +62,7 @@ namespace Behemoth
             foreach(NPC n in npcs.NPCs)
             {
                 int sum = radius + n.Radius;
-                if (Vector2.Distance(position, n.HitPos) < sum)
+                if (Vector2.Distance(position, n.Position) < sum)
                 {
                     n.OnHit(position, charged);
                 }

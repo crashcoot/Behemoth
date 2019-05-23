@@ -108,7 +108,7 @@ namespace Behemoth
             set { momentum = value; }
         }
 
-        public void OnHit(Vector2 otherPos, float power)
+        public override void OnHit(Vector2 otherPos, float power)
         {
             launchDirection = Vector2.Subtract(position, otherPos);
             launchDirection.Normalize();

@@ -151,11 +151,11 @@ namespace Behemoth
 
             if (isMoving)
             {
-                Obstacle tempOb = null;
+                CollisionObject tempOb = null;
                 Rectangle tempRect = hitBox;
                 UTurnCheck();
                 tempRect.X += (int)Math.Ceiling((speed * dt * Math.Cos((int)direction * Math.PI / 4)));
-                if (obstacles.isCollision(tempRect) == null && tempRect.X < mapW && tempRect.X > 0)
+                if ((tempOb = obstacles.isCollision(tempRect)) == null && tempRect.X < mapW && tempRect.X > 0)
                 {
                     position.X += (float)(speed * dt * Math.Cos((int)direction * Math.PI / 4));
                 }
@@ -165,7 +165,7 @@ namespace Behemoth
                 }
                 tempRect = hitBox;
                 tempRect.Y -= (int)Math.Ceiling((speed * dt * Math.Sin((int)direction * Math.PI / 4)));
-                if (obstacles.isCollision(tempRect) == null && tempRect.Y < mapH && tempRect.Y > 64)
+                if ((tempOb = obstacles.isCollision(tempRect)) == null && tempRect.Y < mapH && tempRect.Y > 64)
                 {
                     position.Y -= (float)(speed * dt * Math.Sin((int)direction * Math.PI / 4));
                 }
@@ -262,17 +262,16 @@ namespace Behemoth
             positionOld = position;
         }
 
-        private void Collision(Obstacle ob)
+        private void Collision(CollisionObject ob)
         {
             if (ob != null && speed > defaultSpeed*3 )
             {
-                speed = defaultSpeed;
                 if (stamina >= 2)
                 {
                     stamina -= 2;
-                    ob.OnHit(position, 40);
+                    ob.OnHit(position, speed/maxSpeed*30);
                 }
-                
+                speed = defaultSpeed;
             }
         }
 

@@ -100,7 +100,7 @@ namespace Behemoth
         public void Update(CollisionObjectsList obstacles, GameTime gameTime, Player player)
         {
             active = false;
-            obstacles.Swing(player.Position, radius, charged);
+            obstacles.Swing(position, radius, charged);
         }
     }
 }
