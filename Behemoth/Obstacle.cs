@@ -10,12 +10,11 @@ using Microsoft.Xna.Framework.Input;
 
 namespace Behemoth
 {
-    abstract class Obstacle
+    abstract class Obstacle : CollisionObject
     {
         protected Vector2 position;
         protected int radius;
         protected Vector2 hitPos;
-        protected Rectangle hitBox;
         protected bool dead = false;
         private Texture2D texture;
         protected int drawSort;
@@ -23,7 +22,7 @@ namespace Behemoth
         protected float momentum = 0;
         protected Vector2 launchDirection;
         protected float health;
-        public abstract void Update(ObstacleList obstacles);
+        public abstract void Update();
         protected float mass;
         protected bool moving = false;
 
@@ -36,6 +35,11 @@ namespace Behemoth
         public Vector2 HitPos
         {
             get { return hitPos; }
+        }
+
+        public void Draw(SpriteBatch spriteBatch, int mapHeight)
+        {
+            spriteBatch.Draw(texture, position, null, Color.White, 0f, new Vector2(0, 0), new Vector2(1, 1), new SpriteEffects(), (float)((hitPos.Y - drawSort) / mapHeight));
         }
 
         public Vector2 Position
@@ -77,6 +81,18 @@ namespace Behemoth
         public bool Moving
         {
             get { return moving; }
+        }
+
+        public float Momentum
+        {
+            get { return momentum; }
+            set { momentum = value; }
+        }
+
+        public float Health
+        {
+            get { return health; }
+            set { health = value; }
         }
         
     }

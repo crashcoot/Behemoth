@@ -18,7 +18,7 @@ namespace Behemoth
         int rows;
         int columns;
         private List<Obstacle>[,] obstacles;
-        private List<Obstacle> movingObstacles = new List<Obstacle>();
+        private List<Obstacle> movingObstacles;
 
         public ObstacleList(Vector2 pos, int w, int h)
         {
@@ -35,6 +35,7 @@ namespace Behemoth
                     obstacles[x, y] = new List<Obstacle>();
                 }
             }
+            movingObstacles = new List<Obstacle>();
         }
 
         public void Add(Obstacle ob)
@@ -51,12 +52,12 @@ namespace Behemoth
                 for (int y = 0; y < columns; y++)
                     foreach (Obstacle ob in obstacles[x, y])
                     {
-                        spriteBatch.Draw(ob.Texture, ob.Position, null, Color.White, 0f, new Vector2(0, 0), new Vector2(1, 1), new SpriteEffects(), (float)((ob.HitPos.Y - ob.DrawSort) / mapHeight));
+                        ob.Draw(spriteBatch, mapHeight);
                     }
             }
             foreach(Obstacle ob in movingObstacles)
             {
-                spriteBatch.Draw(ob.Texture, ob.Position, null, Color.White, 0f, new Vector2(0, 0), new Vector2(1, 1), new SpriteEffects(), (float)((ob.HitPos.Y - ob.DrawSort) / mapHeight));
+                ob.Draw(spriteBatch, mapHeight);
             }
 
         }
@@ -69,7 +70,7 @@ namespace Behemoth
                 {
                     foreach(Obstacle ob1 in obstacles[x, y])
                     {
-                        ob1.Update(obs);
+                        ob1.Update();
                     }
                     foreach (Obstacle ob2 in obstacles[x, y])
                     {
@@ -84,7 +85,6 @@ namespace Behemoth
             }
             foreach (Obstacle ob in movingObstacles)
             {
-                ob.Update(obs);
                 if (!ob.Moving)
                 {
                     int x = (int)ob.Position.X / sectionSize;
@@ -93,6 +93,14 @@ namespace Behemoth
                 }
             }
             movingObstacles.RemoveAll(ob => !ob.Moving);
+
+            
+            movingObstacles.RemoveAll(ob => !ob.Moving);
+        }
+
+        public List<Obstacle> MovingObstacles
+        {
+            get { return movingObstacles; }
         }
 
         public void RemoveDead()
@@ -131,7 +139,7 @@ namespace Behemoth
             return tempList.Concat(movingObstacles).ToList();
         }
 
-        public Obstacle DidCollide(Rectangle otherRect)
+        public Obstacle isCollision(Rectangle otherRect)
         {
             List<Obstacle> tempList = AdjacentObstacles(new Vector2(otherRect.X, otherRect.Y));
             foreach(Obstacle ob in tempList)

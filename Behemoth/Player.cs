@@ -94,7 +94,7 @@ namespace Behemoth
             get { return direction; }
         }
 
-        public void Update(ObstacleList obstacles, GameTime gameTime, int mapW, int mapH)
+        public void Update(CollisionObjectsList obstacles, GameTime gameTime, int mapW, int mapH)
         {
             KeyboardState kState = Keyboard.GetState();
             float dt = (float)gameTime.ElapsedGameTime.TotalSeconds;
@@ -155,7 +155,7 @@ namespace Behemoth
                 Rectangle tempRect = hitBox;
                 UTurnCheck();
                 tempRect.X += (int)Math.Ceiling((speed * dt * Math.Cos((int)direction * Math.PI / 4)));
-                if ((tempOb = obstacles.DidCollide(tempRect)) == null && tempRect.X < mapW && tempRect.X > 0)
+                if (obstacles.isCollision(tempRect) == null && tempRect.X < mapW && tempRect.X > 0)
                 {
                     position.X += (float)(speed * dt * Math.Cos((int)direction * Math.PI / 4));
                 }
@@ -165,7 +165,7 @@ namespace Behemoth
                 }
                 tempRect = hitBox;
                 tempRect.Y -= (int)Math.Ceiling((speed * dt * Math.Sin((int)direction * Math.PI / 4)));
-                if ((tempOb = obstacles.DidCollide(tempRect)) == null && tempRect.Y < mapH && tempRect.Y > 64)
+                if (obstacles.isCollision(tempRect) == null && tempRect.Y < mapH && tempRect.Y > 64)
                 {
                     position.Y -= (float)(speed * dt * Math.Sin((int)direction * Math.PI / 4));
                 }

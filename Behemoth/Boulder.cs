@@ -12,6 +12,7 @@ namespace Behemoth
 {
     class Boulder : Obstacle
     {
+        private ObstacleList obstacles;
         public Boulder(Vector2 newPos, Texture2D tex) : base(newPos, tex)
         {
             radius = 15;
@@ -30,7 +31,7 @@ namespace Behemoth
                 health -= power;
         }
 
-        public override void Update(ObstacleList obstacles)
+        public override void Update()
         {
             moving = false;
             if (health <= 0)
@@ -41,19 +42,13 @@ namespace Behemoth
             if (momentum > 0)
             {
                 moving = true;
-                foreach (Obstacle ob in obstacles.AdjacentObstacles(position))
-                {
-                    if (ob != this && hitBox.Intersects(ob.HitBox))
-                    {
-                        health -= 25 * ob.Mass;
-                        momentum *= 1 - ob.Mass;
-                        ob.OnHit(position, momentum);
-                    }
-                }
+                
                 position.X += launchDirection.X * momentum * 0.35F;
                 position.Y += launchDirection.Y * momentum * 0.35F;
-                hitPos = new Vector2(position.X + 16, position.Y + 16);
-                hitBox = new Rectangle((int)position.X + 5, (int)position.Y + 10, 25, 20);
+                hitPos.X = position.X + 16;
+                hitPos.Y = position.Y + 16;
+                hitBox.X = (int)position.X + 5;
+                hitBox.Y = (int)position.Y + 5;
                 if (momentum < 30)
                 {
                     momentum *= 0.8F;

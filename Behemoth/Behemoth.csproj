@@ -44,9 +44,13 @@
     <Compile Include="AnimatedSprite.cs" />
     <Compile Include="Boulder.cs" />
     <Compile Include="Bush.cs" />
+    <Compile Include="CollisionObject.cs" />
+    <Compile Include="CollisionObjectsList.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="Forest.cs" />
     <Compile Include="Game1.cs" />
+    <Compile Include="NPC.cs" />
+    <Compile Include="NPCList.cs" />
     <Compile Include="Obstacle.cs" />
     <Compile Include="ObstacleList.cs" />
     <Compile Include="Player.cs" />
@@ -103,6 +107,7 @@
     <None Include="Content\Obstacles\boulder.xnb" />
     <None Include="Content\Obstacles\bush.xnb" />
     <None Include="Content\Obstacles\Tree.xnb" />
+    <None Include="Content\placeholder.xnb" />
     <None Include="Content\Player\BehemothDown.xnb" />
     <None Include="Content\Player\BehemothLeft.xnb" />
     <None Include="Content\Player\BehemothLeftDown.xnb" />

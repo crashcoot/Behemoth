@@ -97,17 +97,10 @@ namespace Behemoth
             get { return charged; }
         }
 
-        public void Update(ObstacleList obstacles, GameTime gameTime, Player player)
+        public void Update(CollisionObjectsList obstacles, GameTime gameTime, Player player)
         {
             active = false;
-            foreach (Obstacle ob in obstacles.AdjacentObstacles(position))
-            {
-                int sum = player.Swing.Radius + ob.Radius;
-                if (Vector2.Distance(player.Swing.Position, ob.HitPos) < sum)
-                {
-                    ob.OnHit(player.Position, player.Swing.Charged);
-                }
-            }
+            obstacles.Swing(player.Position, radius, charged);
         }
     }
 }

@@ -28,7 +28,7 @@ namespace Behemoth
             health -= power;
         }
 
-        public override void Update(ObstacleList obstacles)
+        public override void Update()
         {
             if (health <= 0)
             {
