@@ -44,9 +44,15 @@
     <Compile Include="AnimatedSprite.cs" />
     <Compile Include="Boulder.cs" />
     <Compile Include="Bush.cs" />
-    <Compile Include="Ecosystem.cs" />
+    <Compile Include="CollisionObject.cs" />
+    <Compile Include="CollisionObjectsList.cs" />
+    <Compile Include="Extensions.cs" />
+    <Compile Include="Forest.cs" />
     <Compile Include="Game1.cs" />
+    <Compile Include="NPC.cs" />
+    <Compile Include="NPCList.cs" />
     <Compile Include="Obstacle.cs" />
+    <Compile Include="ObstacleList.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -78,6 +84,22 @@
   <ItemGroup>
     <MonoGameContentReference Include="Content\Content.mgcb" />
     <None Include="app.manifest" />
+    <None Include="Content\Misc\BehemothDownCharging.xnb" />
+    <None Include="Content\Misc\BehemothDownSwing.xnb" />
+    <None Include="Content\Misc\BehemothLeftCharging.xnb" />
+    <None Include="Content\Misc\BehemothLeftDownCharging.xnb" />
+    <None Include="Content\Misc\BehemothLeftDownSwing.xnb" />
+    <None Include="Content\Misc\BehemothLeftSwing.xnb" />
+    <None Include="Content\Misc\BehemothLeftUpCharging.xnb" />
+    <None Include="Content\Misc\BehemothLeftUpSwing.xnb" />
+    <None Include="Content\Misc\BehemothRightCharging.xnb" />
+    <None Include="Content\Misc\BehemothRightDownCharging.xnb" />
+    <None Include="Content\Misc\BehemothRightDownSwing.xnb" />
+    <None Include="Content\Misc\BehemothRightSwing.xnb" />
+    <None Include="Content\Misc\BehemothRightUpCharging.xnb" />
+    <None Include="Content\Misc\BehemothRightUpSwing.xnb" />
+    <None Include="Content\Misc\BehemothUpCharging.xnb" />
+    <None Include="Content\Misc\BehemothUpSwing.xnb" />
     <None Include="Content\Misc\gameMap.xnb" />
     <None Include="Content\Misc\Grass.xnb" />
     <None Include="Content\Misc\spaceFont.xnb" />
@@ -85,6 +107,7 @@
     <None Include="Content\Obstacles\boulder.xnb" />
     <None Include="Content\Obstacles\bush.xnb" />
     <None Include="Content\Obstacles\Tree.xnb" />
+    <None Include="Content\placeholder.xnb" />
     <None Include="Content\Player\BehemothDown.xnb" />
     <None Include="Content\Player\BehemothLeft.xnb" />
     <None Include="Content\Player\BehemothLeftDown.xnb" />

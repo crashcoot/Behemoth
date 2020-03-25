@@ -16,6 +16,7 @@ namespace Behemoth
     class Player
     {
         private Vector2 position = new Vector2(500,500);
+        private Vector2 positionOld;
         private Dir direction = Dir.Down;
         private Dir directionOld;
         private bool isMoving = false;
@@ -28,9 +29,21 @@ namespace Behemoth
         private int swingDisplacement = 16;
         private float stamina = 100;
         private float maxStamina = 100;
+        private float strength = 100;
+        private float maxStrength = 100;
+        private Swing swing = null;
+        private float charge = 0;
+        private State state;
 
         public AnimatedSprite anim;
-        public AnimatedSprite[] animations = new AnimatedSprite[8];
+        //0 = Walking  1 = charging  2 = swing
+        public AnimatedSprite[][] animations = { new AnimatedSprite[8], new AnimatedSprite[8], new AnimatedSprite[8] };
+        private enum State
+        {
+               Walking,
+               Charging,
+               Swing
+        }
 
         const int topBuffer = 64;
 
@@ -61,29 +74,34 @@ namespace Behemoth
             get { return stamina; }
         }
 
+        public float Strength
+        {
+            get { return strength; }
+        }
+
         public Rectangle HitBox
         {
             get { return hitBox; }
         }
 
-        public void Update(GameTime gameTime, int mapW, int mapH)
+        public Swing Swing
+        {
+            get { return swing; }
+        }
+
+        public Dir Direction
+        {
+            get { return direction; }
+        }
+
+        public void Update(CollisionObjectsList obstacles, GameTime gameTime, int mapW, int mapH)
         {
             KeyboardState kState = Keyboard.GetState();
             float dt = (float)gameTime.ElapsedGameTime.TotalSeconds;
+            state = State.Walking;
 
             hitBox.X = (int)position.X - 13;
             hitBox.Y = (int)position.Y;
-
-            anim = animations[(int)direction];
-
-            if (isMoving)
-            {
-                anim.Update(gameTime);
-            }
-            else
-            {
-                anim.setFrame(0);
-            }
 
             isMoving = false;
 
@@ -131,14 +149,46 @@ namespace Behemoth
                 isMoving = true;
             }
 
+            if (isMoving)
+            {
+                CollisionObject tempOb = null;
+                Rectangle tempRect = hitBox;
+                UTurnCheck();
+                tempRect.X += (int)Math.Ceiling((speed * dt * Math.Cos((int)direction * Math.PI / 4)));
+                if ((tempOb = obstacles.isCollision(tempRect)) == null && tempRect.X < mapW && tempRect.X > 0)
+                {
+                    position.X += (float)(speed * dt * Math.Cos((int)direction * Math.PI / 4));
+                }
+                else
+                {
+                    Collision(tempOb);
+                }
+                tempRect = hitBox;
+                tempRect.Y -= (int)Math.Ceiling((speed * dt * Math.Sin((int)direction * Math.PI / 4)));
+                if ((tempOb = obstacles.isCollision(tempRect)) == null && tempRect.Y < mapH && tempRect.Y > 64)
+                {
+                    position.Y -= (float)(speed * dt * Math.Sin((int)direction * Math.PI / 4));
+                }
+                else
+                {
+                    Collision(tempOb);
+                }
+            }
+            //Player is not moving
+            else
+            {
+                
+            }
             if (kState.IsKeyDown(Keys.LeftShift) && stamina > 0)
             {
-                if (speed < maxSpeed)
+                //If the player is actually moving
+                if (isMoving && position.X != positionOld.X || position.Y != positionOld.Y)
                 {
-                    speed *= 1.01F;
-                }
-                if (isMoving)
-                {
+
+                    if (speed < maxSpeed)
+                    {
+                        speed *= 1.01F * dt / 0.0166667F;
+                    }
                     if (stamina - dt < 0)
                     {
                         stamina = 0;
@@ -153,61 +203,75 @@ namespace Behemoth
                     speed = defaultSpeed;
                 }
             }
-            else if (stamina < maxStamina)
+            else
             {
-                stamina += dt * 5;
                 speed = defaultSpeed;
             }
+            //Spacebar just pressed
+            if (kState.IsKeyDown(Keys.Space) && kStateOld.IsKeyUp(Keys.Space))
+            {
+                if (strength >= 1)
+                {
+                    strength -= 1;
+                    charge += 0.4f;
+                }
+            }
+            //Spacebar being held
+            if (kState.IsKeyDown(Keys.Space) && kStateOld.IsKeyDown(Keys.Space))
+            {
+                state = State.Charging;
+                if (strength >= 1)
+                {
+                    strength -= 1;
+                    charge += 0.4f;
+                }
+            }
+            //Spacebar released
+            if (kState.IsKeyUp(Keys.Space) && kStateOld.IsKeyDown(Keys.Space))
+            {
+                //MySounds.projectileSound.Play(0.2f, 0.5f, 0f);
+                state = State.Swing;
+                swing = new Swing(position, gameTime, direction, charge);
+                charge = 0;
+            }
+            if (swing != null && !swing.Active)
+            {
+                 swing = null;
+            }
+
+            if (stamina > 0 && strength < maxStrength && kState.IsKeyUp(Keys.Space))
+            {
+                stamina -= dt * 0.4f;
+                strength += dt * 40f;
+            }
+            
+            
+            anim = animations[(int)state][(int)direction];
+            anim.setSpeed(0.25D - (0.2D * speed / maxSpeed));
 
             if (isMoving)
             {
-                Obstacle tempOb = null;
-                Rectangle tempRect = hitBox;
-                UTurnCheck();
-                tempRect.X += (int)Math.Ceiling((speed * dt * Math.Cos((int)direction * Math.PI/4)));
-                tempRect.Y -= (int)Math.Ceiling((speed * dt * Math.Sin((int)direction * Math.PI/4)));
-                if ((tempOb = Obstacle.didCollide(tempRect)) == null && tempRect.X < mapW)
-                {
-                    position.X += (float)(speed * dt * Math.Cos((int)direction * Math.PI/4));
-                    position.Y -= (float)(speed * dt * Math.Sin((int)direction * Math.PI/4));
-                }
-                else
-                {
-                    Collision(tempOb);
-                }
-                
-            //Player is not moving
-            } 
+                anim.Update(gameTime);
+            }
             else
             {
-                if (stamina < maxStamina)
-                {
-                    stamina += dt * 5;
-                }
-                
+                anim.setFrame(0);
             }
-            if (kState.IsKeyDown(Keys.Space) && kStateOld.IsKeyUp(Keys.Space) && stamina >= 10)
-            {
-                //MySounds.projectileSound.Play(0.2f, 0.5f, 0f);
-                stamina -= 10;
-                Swing.swings.Add(new Swing(position, gameTime, direction));
-            }
-            anim.setSpeed(0.25D - (0.2D * speed/maxSpeed));
             kStateOld = kState;
             directionOld = direction;
+            positionOld = position;
         }
 
-        private void Collision(Obstacle ob)
+        private void Collision(CollisionObject ob)
         {
             if (ob != null && speed > defaultSpeed*3 )
             {
-                speed = defaultSpeed;
-                if (stamina > 5)
+                if (stamina >= 2)
                 {
-                    stamina -= 5;
-                    ob.Dead = true;
+                    stamina -= 2;
+                    ob.OnHit(position, speed/maxSpeed*30);
                 }
-                
+                speed = defaultSpeed;
             }
         }
 

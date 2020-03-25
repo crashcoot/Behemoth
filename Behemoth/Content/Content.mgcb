@@ -26,6 +26,30 @@
 /processorParam:TextureFormat=Color
 /build:../Sprites/BehemothDown.png;Player/BehemothDown.png
 
+#begin ../Sprites/BehemothDownCharging.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:../Sprites/BehemothDownCharging.png;Player/BehemothDownCharging.png
+
+#begin ../Sprites/BehemothDownSwing.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:../Sprites/BehemothDownSwing.png;Player/BehemothDownSwing.png
+
 #begin ../Sprites/BehemothLeft.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -37,6 +61,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:../Sprites/BehemothLeft.png;Player/BehemothLeft.png
+
+#begin ../Sprites/BehemothLeftCharging.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:../Sprites/BehemothLeftCharging.png;Player/BehemothLeftCharging.png
 
 #begin ../Sprites/BehemothLeftDown.png
 /importer:TextureImporter
@@ -50,6 +86,42 @@
 /processorParam:TextureFormat=Color
 /build:../Sprites/BehemothLeftDown.png;Player/BehemothLeftDown.png
 
+#begin ../Sprites/BehemothLeftDownCharging.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:../Sprites/BehemothLeftDownCharging.png;Player/BehemothLeftDownCharging.png
+
+#begin ../Sprites/BehemothLeftDownSwing.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:../Sprites/BehemothLeftDownSwing.png;Player/BehemothLeftDownSwing.png
+
+#begin ../Sprites/BehemothLeftSwing.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:../Sprites/BehemothLeftSwing.png;Player/BehemothLeftSwing.png
+
 #begin ../Sprites/BehemothLeftUp.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -61,6 +133,30 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:../Sprites/BehemothLeftUp.png;Player/BehemothLeftUp.png
+
+#begin ../Sprites/BehemothLeftUpCharging.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:../Sprites/BehemothLeftUpCharging.png;Player/BehemothLeftUpCharging.png
+
+#begin ../Sprites/BehemothLeftUpSwing.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:../Sprites/BehemothLeftUpSwing.png;Player/BehemothLeftUpSwing.png
 
 #begin ../Sprites/BehemothRight.png
 /importer:TextureImporter
@@ -74,6 +170,18 @@
 /processorParam:TextureFormat=Color
 /build:../Sprites/BehemothRight.png;Player/BehemothRight.png
 
+#begin ../Sprites/BehemothRightCharging.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:../Sprites/BehemothRightCharging.png;Player/BehemothRightCharging.png
+
 #begin ../Sprites/BehemothRightDown.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -85,6 +193,42 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:../Sprites/BehemothRightDown.png;Player/BehemothRightDown.png
+
+#begin ../Sprites/BehemothRightDownCharging.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:../Sprites/BehemothRightDownCharging.png;Player/BehemothRightDownCharging.png
+
+#begin ../Sprites/BehemothRightDownSwing.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:../Sprites/BehemothRightDownSwing.png;Player/BehemothRightDownSwing.png
+
+#begin ../Sprites/BehemothRightSwing.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:../Sprites/BehemothRightSwing.png;Player/BehemothRightSwing.png
 
 #begin ../Sprites/BehemothRightUp.png
 /importer:TextureImporter
@@ -98,6 +242,30 @@
 /processorParam:TextureFormat=Color
 /build:../Sprites/BehemothRightUp.png;Player/BehemothRightUp.png
 
+#begin ../Sprites/BehemothRightUpCharging.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:../Sprites/BehemothRightUpCharging.png;Player/BehemothRightUpCharging.png
+
+#begin ../Sprites/BehemothRightUpSwing.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:../Sprites/BehemothRightUpSwing.png;Player/BehemothRightUpSwing.png
+
 #begin ../Sprites/BehemothUp.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -109,6 +277,30 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:../Sprites/BehemothUp.png;Player/BehemothUp.png
+
+#begin ../Sprites/BehemothUpCharging.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:../Sprites/BehemothUpCharging.png;Player/BehemothUpCharging.png
+
+#begin ../Sprites/BehemothUpSwing.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:../Sprites/BehemothUpSwing.png;Player/BehemothUpSwing.png
 
 #begin ../Sprites/boulder.png
 /importer:TextureImporter
@@ -150,6 +342,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:../Sprites/Grass.png;Misc/Grass.png
+
+#begin ../Sprites/placeholder.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:../Sprites/placeholder.png;Misc/placeholder.png
 
 #begin ../Sprites/spaceFont.spritefont
 /importer:FontDescriptionImporter

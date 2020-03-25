@@ -13,20 +13,20 @@ namespace Behemoth
     class Swing
     {
         private Vector2 position;
-        private int radius =  32;
+        private int radius = 24;
         private bool finished = false;
         private float startTime;
-        private float lifeTime = 0.2f;
+        private bool active = true;
         private Dir direction;
         private int displacement = 24;
+        private float charged;
 
-        public static List<Swing> swings = new List<Swing>();
-
-        public Swing(Vector2 newPos, GameTime time, Dir newDir)
+        public Swing(Vector2 newPos, GameTime time, Dir newDir, float ch)
         {
             position = newPos;
             startTime = (float)time.ElapsedGameTime.TotalSeconds;
             direction = newDir;
+            charged = ch;
 
             switch (direction)
             {
@@ -82,51 +82,25 @@ namespace Behemoth
             get { return radius; }
         }
 
-        public void Update(GameTime gameTime, Vector2 playerPos)
+        public bool Active
         {
-            switch (direction)
-            {
-                case Dir.Up:
-                    position.X = playerPos.X;
-                    position.Y = playerPos.Y - displacement;
-                    break;
-                case Dir.LeftUp:
-                    position.X = playerPos.X - displacement;
-                    position.Y = playerPos.Y - displacement;
-                    break;
-                case Dir.RightUp:
-                    position.X = playerPos.X + displacement;
-                    position.Y = playerPos.Y - displacement;
-                    break;
-                case Dir.Down:
-                    position.X = playerPos.X;
-                    position.Y = playerPos.Y + displacement;
-                    break;
-                case Dir.LeftDown:
-                    position.X = playerPos.X - displacement;
-                    position.Y = playerPos.Y + displacement;
-                    break;
-                case Dir.RightDown:
-                    position.X = playerPos.X + displacement;
-                    position.Y = playerPos.Y + displacement;
-                    break;
-                case Dir.Left:
-                    position.X = playerPos.X - displacement;
-                    position.Y = playerPos.Y;
-                    break;
-                case Dir.Right:
-                    position.X = playerPos.X + displacement;
-                    position.Y = playerPos.Y;
-                    break;
-                default:
-                    break;
-            }
-            lifeTime -= (float)gameTime.ElapsedGameTime.TotalSeconds;
+            get { return active; }
+        }
 
-            if (lifeTime < 0)
-            {
-                finished = true;
-            }
+        public Dir Direction
+        {
+            get { return direction; }
+        }
+
+        public float Charged
+        {
+            get { return charged; }
+        }
+
+        public void Update(CollisionObjectsList obstacles, GameTime gameTime, Player player)
+        {
+            active = false;
+            obstacles.Swing(position, radius, charged);
         }
     }
 }

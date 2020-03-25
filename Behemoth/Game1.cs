@@ -10,7 +10,7 @@ using System;
 namespace Behemoth
 {
 
-    enum Dir
+    public enum Dir
     {
         Right,
         RightUp,
@@ -21,9 +21,10 @@ namespace Behemoth
         Down,
         RightDown
     }
-    
+
     public class Game1 : Game
     {
+
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
@@ -37,12 +38,29 @@ namespace Behemoth
         Texture2D playerRightUp;
         Texture2D playerLeftDown;
         Texture2D playerLeftUp;
+        Texture2D playerDownCharging;
+        Texture2D playerUpCharging;
+        Texture2D playerLeftCharging;
+        Texture2D playerRightCharging;
+        Texture2D playerRightDownCharging;
+        Texture2D playerRightUpCharging;
+        Texture2D playerLeftDownCharging;
+        Texture2D playerLeftUpCharging;
+        Texture2D playerDownSwing;
+        Texture2D playerUpSwing;
+        Texture2D playerLeftSwing;
+        Texture2D playerRightSwing;
+        Texture2D playerRightDownSwing;
+        Texture2D playerRightUpSwing;
+        Texture2D playerLeftDownSwing;
+        Texture2D playerLeftUpSwing;
 
-        Texture2D testHitSPrite;
+        //Texture2D testHitSPrite;
 
         Texture2D treeSprite;
         Texture2D bushSprite;
         Texture2D boulderSprite;
+        Texture2D placeholderSprite;
 
         Color[] data = new Color[80 * 30];
         
@@ -50,9 +68,13 @@ namespace Behemoth
         TiledMapRenderer mapRenderer;
         TiledMap myMap;
 
+        CollisionObjectsList collisionObjects;
+        Forest forest;
+
         Camera2D cam;
 
         Player player = new Player();
+        NPC npc;
 
         Texture2D _texture;
 
@@ -91,7 +113,7 @@ namespace Behemoth
 
             font = Content.Load<SpriteFont>("Misc/spaceFont");
 
-            testHitSPrite = Content.Load<Texture2D>("Misc/testHit");
+            placeholderSprite = Content.Load<Texture2D>("Misc/placeholder");
 
             playerUp = Content.Load<Texture2D>("Player/BehemothUp");
             playerDown = Content.Load<Texture2D>("Player/BehemothDown");
@@ -102,23 +124,60 @@ namespace Behemoth
             playerLeftDown = Content.Load<Texture2D>("Player/BehemothLeftDown");
             playerLeftUp = Content.Load<Texture2D>("Player/BehemothLeftUp");
 
-            player.animations[0] = new AnimatedSprite(playerRight, 1, 4);
-            player.animations[1] = new AnimatedSprite(playerRightUp, 1, 4);
-            player.animations[2] = new AnimatedSprite(playerUp, 1, 4);
-            player.animations[3] = new AnimatedSprite(playerLeftUp, 1, 4);
-            player.animations[4] = new AnimatedSprite(playerLeft, 1, 4);
-            player.animations[5] = new AnimatedSprite(playerLeftDown, 1, 4);
-            player.animations[6] = new AnimatedSprite(playerDown, 1, 4);
-            player.animations[7] = new AnimatedSprite(playerRightDown, 1, 4);
+            playerUpCharging = Content.Load<Texture2D>("Player/BehemothUpCharging");
+            playerDownCharging = Content.Load<Texture2D>("Player/BehemothDownCharging");
+            playerLeftCharging = Content.Load<Texture2D>("Player/BehemothLeftCharging");
+            playerRightCharging = Content.Load<Texture2D>("Player/BehemothRightCharging");
+            playerRightDownCharging = Content.Load<Texture2D>("Player/BehemothRightDownCharging");
+            playerRightUpCharging = Content.Load<Texture2D>("Player/BehemothRightUpCharging");
+            playerLeftDownCharging = Content.Load<Texture2D>("Player/BehemothLeftDownCharging");
+            playerLeftUpCharging = Content.Load<Texture2D>("Player/BehemothLeftUpCharging");
+
+            playerUpSwing = Content.Load<Texture2D>("Player/BehemothUpSwing");
+            playerDownSwing = Content.Load<Texture2D>("Player/BehemothDownSwing");
+            playerLeftSwing = Content.Load<Texture2D>("Player/BehemothLeftSwing");
+            playerRightSwing = Content.Load<Texture2D>("Player/BehemothRightSwing");
+            playerRightDownSwing = Content.Load<Texture2D>("Player/BehemothRightDownSwing");
+            playerRightUpSwing = Content.Load<Texture2D>("Player/BehemothRightUpSwing");
+            playerLeftDownSwing = Content.Load<Texture2D>("Player/BehemothLeftDownSwing");
+            playerLeftUpSwing = Content.Load<Texture2D>("Player/BehemothLeftUpSwing");
+
+
+            player.animations[0][0] = new AnimatedSprite(playerRight, 1, 4);
+            player.animations[0][1] = new AnimatedSprite(playerRightUp, 1, 4);
+            player.animations[0][2] = new AnimatedSprite(playerUp, 1, 4);
+            player.animations[0][3] = new AnimatedSprite(playerLeftUp, 1, 4);
+            player.animations[0][4] = new AnimatedSprite(playerLeft, 1, 4);
+            player.animations[0][5] = new AnimatedSprite(playerLeftDown, 1, 4);
+            player.animations[0][6] = new AnimatedSprite(playerDown, 1, 4);
+            player.animations[0][7] = new AnimatedSprite(playerRightDown, 1, 4);
+
+            player.animations[1][0] = new AnimatedSprite(playerRightCharging, 1, 4);
+            player.animations[1][1] = new AnimatedSprite(playerRightUpCharging, 1, 4);
+            player.animations[1][2] = new AnimatedSprite(playerUpCharging, 1, 4);
+            player.animations[1][3] = new AnimatedSprite(playerLeftUpCharging, 1, 4);
+            player.animations[1][4] = new AnimatedSprite(playerLeftCharging, 1, 4);
+            player.animations[1][5] = new AnimatedSprite(playerLeftDownCharging, 1, 4);
+            player.animations[1][6] = new AnimatedSprite(playerDownCharging, 1, 4);
+            player.animations[1][7] = new AnimatedSprite(playerRightDownCharging, 1, 4);
+
+            player.animations[2][0] = new AnimatedSprite(playerRightSwing, 1, 1);
+            player.animations[2][1] = new AnimatedSprite(playerRightUpSwing, 1, 1);
+            player.animations[2][2] = new AnimatedSprite(playerUpSwing, 1, 1);
+            player.animations[2][3] = new AnimatedSprite(playerLeftUpSwing, 1, 1);
+            player.animations[2][4] = new AnimatedSprite(playerLeftSwing, 1, 1);
+            player.animations[2][5] = new AnimatedSprite(playerLeftDownSwing, 1, 1);
+            player.animations[2][6] = new AnimatedSprite(playerDownSwing, 1, 1);
+            player.animations[2][7] = new AnimatedSprite(playerRightDownSwing, 1, 1);
 
             myMap = Content.Load<TiledMap>("Misc/gameMap");
+            collisionObjects = new CollisionObjectsList(new Vector2(0, 0), myMap.WidthInPixels, myMap.HeightInPixels);
 
             treeSprite = Content.Load<Texture2D>("Obstacles/Tree");
             bushSprite = Content.Load<Texture2D>("Obstacles/bush");
             boulderSprite = Content.Load<Texture2D>("Obstacles/boulder");
-            generateForest(new Vector2(0,0), myMap.WidthInPixels, myMap.HeightInPixels, 25, 25);
-
-
+            forest = new Forest(collisionObjects, new Vector2(0,0), myMap.WidthInPixels, myMap.HeightInPixels, 20, 20, treeSprite, bushSprite, boulderSprite, placeholderSprite);
+            
         }
 
         
@@ -136,28 +195,23 @@ namespace Behemoth
             int mapW = myMap.WidthInPixels;
             int mapH = myMap.HeightInPixels;
 
-            player.Update(gameTime, mapW, mapH);
-            foreach(Swing sw in Swing.swings)
+            player.Update(collisionObjects, gameTime, mapW, mapH);
+            if (player.Swing != null)
             {
-                sw.Update(gameTime, player.Position);
-                foreach(Obstacle ob in Obstacle.obstacles)
-                {
-                    int sum = sw.Radius + ob.Radius;
-                    if (Vector2.Distance(sw.Position, ob.HitPos) < sum)
-                    {
-                        ob.Dead = true;
-                    }
-                }
+                player.Swing.Update(collisionObjects, gameTime, player);
             }
+            collisionObjects.Update();
 
-            Swing.swings.RemoveAll(s => s.Finished);
-            Obstacle.obstacles.RemoveAll(ob => ob.Dead);
+            float camW = graphics.PreferredBackBufferWidth / cam.Zoom;
+            float camH = graphics.PreferredBackBufferHeight / cam.Zoom;
+
+            collisionObjects.RemoveDead();
+            forest.Update(collisionObjects, gameTime, player, camW, camH);
 
             float tmpX = player.Position.X;
             float tmpY = player.Position.Y;
 
-            float camW = graphics.PreferredBackBufferWidth / cam.Zoom;
-            float camH = graphics.PreferredBackBufferHeight / cam.Zoom;
+            
 
             if (tmpX < camW / 2)
             {
@@ -187,69 +241,32 @@ namespace Behemoth
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.DarkGreen);
-
-
-
+            
             spriteBatch.Begin(transformMatrix: cam.GetViewMatrix(), sortMode: SpriteSortMode.FrontToBack);
             mapRenderer.Draw(myMap, cam.GetViewMatrix());
-            foreach (Swing sw in Swing.swings)
+            if (player.Swing != null) 
             {
-                spriteBatch.Draw(testHitSPrite, new Vector2(sw.Position.X-16, sw.Position.Y-16), null, Color.White, 0f, new Vector2(0, 0), new Vector2(1, 1), new SpriteEffects(), (float)((sw.Position.Y + 16) / myMap.HeightInPixels));
+                //spriteBatch.Draw(testHitSPrite, new Vector2(player.Swing.Position.X-16, player.Swing.Position.Y-16), null, Color.White, 0f, new Vector2(0, 0), new Vector2(1, 1), new SpriteEffects(), (float)((player.Swing.Position.Y + 16) / myMap.HeightInPixels));
             }
-            foreach (Obstacle ob in Obstacle.obstacles)
-            {
-                spriteBatch.Draw(ob.Texture, ob.Position, null, Color.White, 0f, new Vector2(0, 0), new Vector2(1, 1), new SpriteEffects(), (float)((ob.HitPos.Y - ob.DrawSort) / myMap.HeightInPixels));
-                spriteBatch.Draw(_texture, ob.HitBox, Color.White);
-            }
-
+            collisionObjects.Draw(spriteBatch, myMap.HeightInPixels);
+            //foreach (Obstacle ob in obstacles.AdjacentObstacles(player.Position))
+            //{
+            //spriteBatch.Draw(ob.Texture, ob.Position, null, Color.White, 0f, new Vector2(0, 0), new Vector2(1, 1), new SpriteEffects(), (float)((ob.HitPos.Y - ob.DrawSort) / myMap.HeightInPixels));
+            //}
 
             
 
             player.anim.Draw(spriteBatch, new Vector2(player.Position.X - 32, player.Position.Y - 32), myMap.WidthInPixels);
-            spriteBatch.Draw(_texture, player.HitBox, Color.White);
+            //spriteBatch.Draw(_texture, player.HitBox, Color.White);
 
             spriteBatch.End();
 
             spriteBatch.Begin();
-            spriteBatch.DrawString(font, "Stamina: " + Math.Floor(player.Stamina), new Vector2(3,3), Color.White);
+            spriteBatch.DrawString(font, "Sta: " + Math.Floor(player.Stamina), new Vector2(3,3), Color.White);
+            spriteBatch.DrawString(font, "Str : " + Math.Floor(player.Strength), new Vector2(3, 45), Color.White);
             spriteBatch.End();
             
             base.Draw(gameTime);
-        }
-
-        private void generateForest(Vector2 topLeft, int width, int height, int columns, int rows)
-        {
-            var rnd = new Random(DateTime.Now.Millisecond);
-            for (int x = 0; x < columns; x++)
-            {
-                for (int y = 0; y < rows; y++)
-                {
-                    Obstacle.obstacles.Add(new Tree(new Vector2(rnd.Next(x * width / columns + 16, (x + 1) * width / columns) - 16, rnd.Next(y * height / rows + 16, (y + 1) * height / rows - 16)), treeSprite));
-                }
-            }
-            for (int x = 0; x < columns; x += 2)
-            {
-                for (int y = 0; y < rows; y += 2)
-                {
-                    Bush tempBush = new Bush(new Vector2(rnd.Next(x * width / columns + 16, (x + 2) * width / columns), rnd.Next(y * height / rows + 16, (y + 1) * height / rows - 16)), bushSprite);
-                    if (Obstacle.didCollide(tempBush.HitBox) == null)
-                    {
-                        Obstacle.obstacles.Add(tempBush);
-                    }
-                }
-            }
-
-            for (int x = 0; x < columns; x += 3)
-            {
-                for (int y = 0; y < rows; y += 3)
-                {
-                    Boulder tempBoulder = new Boulder(new Vector2(rnd.Next(x * width / columns + 16, (x + 2) * width / columns), rnd.Next(y * height / rows + 16, (y + 1) * height / rows - 16)), boulderSprite);
-                    if (Obstacle.didCollide(tempBoulder.HitBox) == null)
-                    {
-                        Obstacle.obstacles.Add(tempBoulder);
-                    }
-                }
-            }
         }
     }
 }
